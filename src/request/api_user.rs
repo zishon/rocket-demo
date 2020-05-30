@@ -26,10 +26,10 @@ impl<'a, 'r> FromRequest<'a, 'r> for ApiUser {
 
 
         let mut dash_map: State<DashMap<String, AtomicUsize>> = request.guard::<State<DashMap<String, AtomicUsize>>>().unwrap();
-        if dash_map.get(&s).is_none() {
-            dash_map.insert(s, AtomicUsize::new(1));
+        if dash_map.get(&app_id).is_none() {
+            dash_map.insert(app_id, AtomicUsize::new(1));
         } else {
-            dash_map.get_mut(&s).unwrap().fetch_add(1, Ordering::SeqCst);
+            dash_map.get_mut(&app_id).unwrap().fetch_add(1, Ordering::SeqCst);
         }
 
         let mut a = ApiUser {
