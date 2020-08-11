@@ -15,21 +15,19 @@ pub enum ApiUserError {
     Invalid,
 }
 
-
-
 impl<'a, 'r> FromRequest<'a, 'r> for ApiUser {
     type Error = ApiUserError;
 
     fn from_request(request: &'a Request<'r>) -> rocket::request::Outcome<Self, Self::Error> {
-        let app_id: String = request.get_query_value("app_id").unwrap().unwrap();
+        let app_code: String = request.get_query_value("app_code").unwrap().unwrap();
         let sign: String = request.get_query_value("sign").unwrap().unwrap();
 
 
         let mut dash_map: State<DashMap<String, AtomicUsize>> = request.guard::<State<DashMap<String, AtomicUsize>>>().unwrap();
-        if dash_map.get(&app_id).is_none() {
-            dash_map.insert(app_id, AtomicUsize::new(1));
+        if dash_map.get(&app_code).is_none() {
+            dash_map.insert(app_code, AtomicUsize::new(1));
         } else {
-            dash_map.get_mut(&app_id).unwrap().fetch_add(1, Ordering::SeqCst);
+            dash_map.get_mut(&app_code).unwrap().fetch_add(1, Ordering::SeqCst);
         }
 
         let mut a = ApiUser {

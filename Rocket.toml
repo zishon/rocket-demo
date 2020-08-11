@@ -6,7 +6,7 @@
 address = "127.0.0.1"
 port = 8000
 workers = 16
-keep_alive = 5
+keep_alive = 8
 log = "normal"
 #secret_key = ""
 limits = { forms = 32768 }
@@ -14,9 +14,9 @@ template_dir = "src/templates/"
 
 [staging]
 address = "127.0.0.1"
-port = 8000
+port = 8001
 workers = 16
-keep_alive = 5
+keep_alive = 8
 log = "normal"
 #secret_key = ""
 limits = { forms = 32768 }
@@ -24,10 +24,13 @@ template_dir = "src/templates/"
 
 [production]
 address = "127.0.0.1"
-port = 8000
+port = 8002
 workers = 16
-keep_alive = 5
-log = "normal"
+keep_alive = 8
+#log = "normal"
 #secret_key = ""
 limits = { forms = 32768 }
 template_dir = "src/templates/"
+
+[global.databases.rocket_demo]
+url = "mysql://root:password@127.0.0.1/rocket_demo"
