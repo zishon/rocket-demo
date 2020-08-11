@@ -23,10 +23,10 @@ limits = { forms = 32768 }
 template_dir = "src/templates/"
 
 [production]
-address = "127.0.0.1"
-port = 8002
-workers = 16
-keep_alive = 8
+address = "0.0.0.0"
+port = 8090
+workers = 32
+keep_alive = 16
 #log = "normal"
 #secret_key = ""
 limits = { forms = 32768 }
