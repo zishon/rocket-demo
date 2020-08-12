@@ -28,3 +28,9 @@ table! {
         updated_at -> Text,
     }
 }
+
+table! {
+    last_insert (id) {
+        id -> Integer,
+    }
+}

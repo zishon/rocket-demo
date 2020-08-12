@@ -46,6 +46,7 @@ pub mod db {
 pub mod provider {
     pub mod admin;
     pub mod admin_access_token;
+    pub mod last_insert_provider;
 }
 
 pub mod error {

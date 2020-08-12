@@ -21,6 +21,9 @@ pub struct InsertableAdmin<'a> {
 
 #[derive(Debug)]
 #[derive(Queryable)]
+#[derive(QueryableByName)]
+#[table_name = "admin_access_token"]
+#[derive(PartialEq)]
 pub struct AdminAccessToken {
     pub id: i32,
     pub admin_id: i32,
@@ -50,4 +53,13 @@ pub struct ApiUserSecret {
 pub struct InsertableApiUserSecret<'a> {
     pub app_code: &'a str,
     pub app_secret: &'a str,
+}
+
+#[derive(PartialEq)]
+#[derive(Debug)]
+#[derive(Queryable)]
+#[derive(QueryableByName)]
+#[table_name = "last_insert"]
+pub struct InsertId {
+    pub id: i32,
 }
