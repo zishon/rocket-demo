@@ -44,8 +44,8 @@ pub mod db {
 }
 
 pub mod provider {
-    pub mod admin;
-    pub mod admin_access_token;
+    pub mod admin_provider;
+    pub mod admin_access_token_provider;
     pub mod last_insert_provider;
 }
 
