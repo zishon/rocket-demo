@@ -46,17 +46,6 @@ fn passwd_hash(p: &str, s: &str) -> String {
     format!("{:x}", md5::compute((without_salt_hash + s).as_str()))
 }
 
-fn insert_access_token(access_token: &str, admin_id: i32, connection: &MysqlDatabase) -> bool {
-    let record = InsertableAdminAccessToken {
-        admin_id: admin_id,
-        access_token: access_token,
-    };
-    let result = diesel::insert_into(admin_access_token::table)
-        .values(&record)
-        .execute(&connection.0);
-    true
-}
-
 #[post("/admin/login", format = "application/json", data = "<admin_login>")]
 pub fn login(admin_login: Json<AdminLogin>, connection: MysqlDatabase) -> Result<Json<BaseResponse<AdminToken>>, Error> {
     let admin_record = admin_provider::get_by_name(&admin_login.name, &connection);
@@ -68,7 +57,8 @@ pub fn login(admin_login: Json<AdminLogin>, connection: MysqlDatabase) -> Result
             .sample_iter(&Alphanumeric)
             .take(32)
             .collect();
-        insert_access_token(&rand_string, admin_record.id, &connection);
+        admin_access_token_provider::insert_access_token(&rand_string, admin_record.id, &connection);
+        let last_id = last_insert_id(&connection);
         let admin_token = AdminToken {
             token: rand_string,
         };
